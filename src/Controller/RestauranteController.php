@@ -41,14 +41,14 @@ class RestauranteController extends AbstractController
         $fb->add("Nombre", TextType::class, [
 
             "constraints"=>[
-                new Length(["min"=>1,"max"=> 255]),
+                new Length(["min"=>1,"max"=> 256]),
                 new NotBlank()
             ]
         ]);
         $fb->add("Direccion", TextType::class, [
 
             "constraints"=>[
-                new Length(["min"=>1,"max"=> 255]),
+                new Length(["min"=>1,"max"=> 256]),
                 new NotBlank()
             ]
         ]);
@@ -61,9 +61,10 @@ class RestauranteController extends AbstractController
         $fb->add("Tipo_de_cocina", TextType::class, [
             "required" => false,
             "constraints"=>[
-                new Length(["min"=>1,"max"=> 255])
+                new Length(["min"=>1,"max"=> 256])
             ]
         ]);
+
         $fb->add("Guardar", SubmitType::class);
 
         $formulario = $fb -> getForm();

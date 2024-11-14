@@ -17,9 +17,19 @@
 
         <ul> 
             <a href="{{path('mostrar_restaurante', {idRestaurante: restaurante.getId()} )}}"> {{restaurante.getNombre()}}</a>
+
+            <button> 
+                <a href="{{path('mostrar_restaurante', {idRestaurante: restaurante.getId()})}}"> VER </a>
+                </button>
         </ul>
 
     {% endfor %}
+
+    <br>
+
+    <button>
+        <a href="{{path('crear_restaurante')}}"> CREAR RESTAURANTE </a>
+        </button>
 
 </div>
 {% endblock %}
