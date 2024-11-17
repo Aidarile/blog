@@ -12,24 +12,43 @@
     <h1>{{ controller_name }}! ✅</h1>
 
     Listado de restaurantes:
-    
     {% for restaurante in listadoRestaurantes %}
+        <ul>
+            <li>
+                <h2> {{ restaurante.getNombre() }}
+                    <button>
+                        <a href="{{ path('mostrar_restaurante', {idRestaurante: restaurante.getId()}) }}">DETALLES</a>
+                    </button>
+                    <button>
+                        <a href="{{ path('actualizar_restaurante', {idRestaurante: restaurante.getId()}) }}">ACTUALIZAR</a>
+                    </button>
+                    
+                   <form action="{{ path('eliminar_restaurante', {idRestaurante: restaurante.getId()}) }}" method="POST" style="display:inline;">
+                    <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este restaurante?');">ELIMINAR</button>
+                    </form>
 
-        <ul> 
-            <a href="{{path('mostrar_restaurante', {idRestaurante: restaurante.getId()} )}}"> {{restaurante.getNombre()}}</a>
-
-            <button> 
-                <a href="{{path('mostrar_restaurante', {idRestaurante: restaurante.getId()})}}"> VER </a>
-                </button>
+                </h2>
+            </li>
         </ul>
+    {% endfor %}
 
+ 
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ type }}">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% endfor %}
 
     <br>
-
-    <button>
-        <a href="{{path('crear_restaurante')}}"> CREAR RESTAURANTE </a>
+    <div>
+        <button> 
+            <a href="{{ path('crear_restaurante') }}">CREAR RESTAURANTE</a>
         </button>
-
+        <button> 
+            <a href="{{ path('mostrartodos_visita') }}">VER VISITAS</a>
+        </button>
+    </div>
 </div>
 {% endblock %}

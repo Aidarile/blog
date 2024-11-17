@@ -1,20 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello VisitaController!{% endblock %}
+{% block title %}Listado de Visitas{% endblock %}
 
 {% block body %}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .button-container { margin-top: 20px; }
+    button { margin-right: 10px; }
+    a { text-decoration: none; color: inherit; }
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>{{ controller_name }}</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Symfony/blog/src/Controller/VisitaController.php</code></li>
-        <li>Your template at <code>C:/Symfony/blog/templates/visita/index.html.twig</code></li>
-    </ul>
+    <h2>Visitas realizadas:</h2>
+    {% if listadoVisitas is not empty %}
+        <ul>
+            {% for visita in listadoVisitas %}
+                <li>
+                    <h3>Visita nº: {{ visita.getId() }}   |||   Restaurante: {{ visita.getRestaurante().getNombre() }}   |||   Valoración: {{ visita.getValoracion() }}</h3>
+                    <p>{{ visita.getComentario() }}</p>
+                    <div>
+                        <button>
+                            <a href="{{ path('actualizar_visita', {idVisita: visita.getId()}) }}">Modificar</a>
+                        </button>
+                        <form action="{{ path('eliminar_visita', {idVisita: visita.getId()}) }}" method="POST" style="display:inline;">
+                            <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar la visita?');">Eliminar</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay visitas registradas.</p>
+    {% endif %}
+
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ type }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="button-container">
+        <button>
+            <a href="{{ path('crear_visita') }}">Nueva Visita</a>
+        </button>
+        <button>
+            <a href="{{ path('listado_restaurantes') }}">Ver Restaurantes</a>
+        </button>
+    </div>
 </div>
 {% endblock %}
